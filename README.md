@@ -2,11 +2,21 @@
 
 A grunt task that concatenate's files based on sourcemap sources.
 
+```
+	npm install grunt-mapcatenate --save-dev
+```
+
+Once the plugin has been installed, it may be enabled inside your Gruntfile with this line of JavaScript:
+
+```
+	grunt.loadNpmTasks('grunt-mapcatenate');
+```
+
 ## Uses?
 
 If you have a file structure where you place your CSS files next to your JS components then this is the task for you!
 
-This will allow you to piggyback on top of your JS inheritance resolution and build your CSS the same way you build your JS.
+This will allow you to piggyback on top of your JS inheritance resolution, and build your CSS the same way you build your JS.
 
 ## Examples
 

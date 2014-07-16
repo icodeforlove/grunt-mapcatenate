@@ -1,6 +1,6 @@
 {
   "name": "grunt-mapcatenate",
-  "version": "0.0.0",
+  "version": "0.0.1",
   "description": "A grunt task that concatenate's files based on sourcemap sources.",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
@@ -8,6 +8,10 @@
   "files": [
     "tasks"
   ],
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/icodeforlove/grunt-mapcatenate.git"
+  },
   "author": {
     "name": "Chad Scira",
     "email": "chadvscira@gmail.com"
