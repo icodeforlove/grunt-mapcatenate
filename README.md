@@ -1,4 +1,4 @@
-# Mapcatenate
+# grunt-mapcatenate
 
 A grunt task that concatenate's files based on sourcemap sources.
 
