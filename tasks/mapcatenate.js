@@ -33,7 +33,7 @@ var Mapcatenate = PromiseObject.create({
 			   		
 			   		$self
 			   			.resolveDependencies($self.fileInfo, allIgnoreFiles)
-						.then($self.findAndConcatCssFiles)
+						.then($self.findAndConcatFiles)
 						.done(function (source) {
 							console.log(('Mapcatenated (' + $self.fileInfo.dest + ')').cyan);
 							fs.writeFile($self.fileInfo.dest, source, function () {
@@ -74,13 +74,13 @@ var Mapcatenate = PromiseObject.create({
 		});
 	},
 
-	findAndConcatCssFiles: function ($deferred, files) {
-		Promise.mapUnfulfilled(files, this.findAndConcatCssFile).allLimit(1).done(function (sources) {
+	findAndConcatFiles: function ($deferred, files) {
+		Promise.mapUnfulfilled(files, this.findAndConcatFile).allLimit(1).done(function (sources) {
 			$deferred.resolve(sources.join('\n').trim());
 		});
 	},
 
-	findAndConcatCssFile: function ($deferred, file) {
+	findAndConcatFile: function ($deferred, file) {
 		fs.readFile(file, 'utf8', function (error, data) {
 			if (error) {
 				$deferred.resolve('');
