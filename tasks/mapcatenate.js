@@ -49,6 +49,14 @@ var Mapcatenate = PromiseObject.create({
 		fs.readFile(fileInfo.src[0], 'utf8', function (error, source) {
 			var json = JSON.parse(source);
 			
+
+			json.sources = json.sources.map(function (file) {
+				// hack for webpack sources
+				file = file.replace(/^webpack:\/\/\//, '');
+
+				return file;
+			});
+
 			var resolvedFiles = json.sources.map(function (file) {
 					return file.replace(new RegExp($self.regExpEscape($self.srcExtension) + '$'), $self.destExtension);
 				})

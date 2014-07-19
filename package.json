@@ -1,6 +1,6 @@
 {
   "name": "grunt-mapcatenate",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "description": "A grunt task that concatenate's files based on sourcemap sources.",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
