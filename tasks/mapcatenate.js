@@ -49,22 +49,20 @@ var Mapcatenate = PromiseObject.create({
 		fs.readFile(fileInfo.src[0], 'utf8', function (error, source) {
 			var json = JSON.parse(source);
 			
+			var files = json.sources.map(function (file) {
+					// hack for webpack sources
+					file = file.replace(/^webpack:\/\/\//, '');
 
-			json.sources = json.sources.map(function (file) {
-				// hack for webpack sources
-				file = file.replace(/^webpack:\/\/\//, '');
+					// replace file extensions
+					file = file.replace(new RegExp($self.regExpEscape($self.srcExtension) + '$'), $self.destExtension);
 
-				return file;
-			});
-
-			var resolvedFiles = json.sources.map(function (file) {
-					return file.replace(new RegExp($self.regExpEscape($self.srcExtension) + '$'), $self.destExtension);
+					return file;
 				})
 				.filter(function (file) {
-					return ignoreFiles.indexOf(file) === -1;
+					return ignoreFiles.indexOf(file) === -1 && fs.existsSync(file);
 				});
 
-			$deferred.resolve(resolvedFiles);
+			$deferred.resolve(files);
 		});
 	},
 
@@ -79,7 +77,7 @@ var Mapcatenate = PromiseObject.create({
 				resolvedFiles = json.sources;
 
 			$deferred.resolve(resolvedFiles.map(function (file) {
-				return file.replace(new RegExp($self.regExpEscape($self.srcExtension) + '$'), $self.destExtension);
+				return file;
 			}));
 		});
 	},
