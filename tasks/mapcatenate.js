@@ -1,8 +1,7 @@
 var fs = require('fs'),
 	colors = require('colors'),
 	Promise = require('whenplus'),
-	PromiseObject = require('promise-object')(Promise),
-	_ = require('underscore');
+	PromiseObject = require('promise-object')(Promise);
 
 var Mapcatenate = PromiseObject.create({
 	initialize: function ($config, fileInfo) {
@@ -17,6 +16,9 @@ var Mapcatenate = PromiseObject.create({
 	},
 
 	$concat: function ($deferred, fileInfo, config) {
+		if (!fileInfo.src[0]) {
+			throw new Error('mapcatenate: provided src file for (' + fileInfo.dest + ') doesnt exist!');
+		}
 		var instance = new Mapcatenate(config, fileInfo);
 		instance.concatAndWriteFile().done($deferred.resolve, $deferred.reject);
 	},
@@ -33,7 +35,7 @@ var Mapcatenate = PromiseObject.create({
 			   		
 			   		$self
 			   			.resolveDependencies($self.fileInfo, allIgnoreFiles)
-						.then($self.findAndConcatFiles)
+						.then($self.findAndConcatCssFiles)
 						.done(function (source) {
 							console.log(('Mapcatenated (' + $self.fileInfo.dest + ')').cyan);
 							fs.writeFile($self.fileInfo.dest, source, function () {
@@ -74,13 +76,13 @@ var Mapcatenate = PromiseObject.create({
 		});
 	},
 
-	findAndConcatFiles: function ($deferred, files) {
-		Promise.mapUnfulfilled(files, this.findAndConcatFile).allLimit(1).done(function (sources) {
+	findAndConcatCssFiles: function ($deferred, files) {
+		Promise.mapUnfulfilled(files, this.findAndConcatCssFile).allLimit(1).done(function (sources) {
 			$deferred.resolve(sources.join('\n').trim());
 		});
 	},
 
-	findAndConcatFile: function ($deferred, file) {
+	findAndConcatCssFile: function ($deferred, file) {
 		fs.readFile(file, 'utf8', function (error, data) {
 			if (error) {
 				$deferred.resolve('');
@@ -92,12 +94,12 @@ var Mapcatenate = PromiseObject.create({
 });
 
 module.exports = function(grunt) {
-	var mapcatenateConfig = grunt.config.get('mapcatenate').config;
+	var mapcatenateConfig = grunt.config.get('mapcatenate').options;
 	
 	grunt.registerMultiTask('mapcatenate', 'Concatenate\'s files based on sourcemap sources.', function(target) {
 		var callback = this.async(),
-			config = _.extend({}, mapcatenateConfig, this.data.config);
+			options = this.options();
 
-		Promise.mapUnfulfilled(this.files, [Mapcatenate.concat, config]).allLimit(1).done(callback);
+		Promise.mapUnfulfilled(this.files, [Mapcatenate.concat, options]).allLimit(1).done(callback);
 	});
 };

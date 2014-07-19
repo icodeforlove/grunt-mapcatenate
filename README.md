@@ -1,4 +1,4 @@
-# grunt-mapcatenate
+# Mapcatenate
 
 A grunt task that concatenate's files based on sourcemap sources.
 
@@ -24,7 +24,7 @@ heres the most basic configuration, this tells mapcatenate that in our `index.ma
 
 ```javascript
 mapcatenate: {
-	config: {
+	options: {
 		srcExtension: '.js',
 		destExtension: '.css'
 	},
@@ -41,7 +41,7 @@ there are some scenarios where you have generic components that exist in a globa
 
 ```
 mapcatenate: {
-	config: {
+	options: {
 		srcExtension: '.js',
 		destExtension: '.css'
 	},
@@ -53,7 +53,7 @@ mapcatenate: {
 	},
 
 	homepage: {
-		config: {
+		options: {
 			ignoreFilesFromMaps: ['build/global.map']
 		},
 

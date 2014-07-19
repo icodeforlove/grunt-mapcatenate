@@ -1,6 +1,6 @@
 {
   "name": "grunt-mapcatenate",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "A grunt task that concatenate's files based on sourcemap sources.",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
@@ -24,5 +24,8 @@
     "underscore": "~1.6.0",
     "whenplus": "~1.7.1-g"
   },
-  "readme": "ERROR: No README data found!"
+  "bugs": {
+    "url": "https://github.com/icodeforlove/grunt-mapcatenate/issues"
+  },
+  "homepage": "https://github.com/icodeforlove/grunt-mapcatenate"
 }
